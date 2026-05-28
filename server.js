@@ -51,6 +51,7 @@ app.use('/api/whatsapp', require('./routes/whatsapp'));
 app.use('/api/ical', require('./routes/ical'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/api/logs', require('./routes/logs'));
+app.use('/api/ocr-demo', require('./routes/ocrDemo'));
 
 app.get('/', (req, res) => res.redirect('/login.html'));
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
