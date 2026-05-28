@@ -57,6 +57,7 @@ app.use('/api/whatsapp', require('./routes/whatsapp'));
 app.use('/api/ical', require('./routes/ical'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/api/logs', require('./routes/logs'));
+app.use('/admin', require('./routes/admin'));
 app.use('/api/ocr-demo', require('./routes/ocrDemo'));
 
 app.get('/', (req, res) => res.redirect('/login.html'));
@@ -72,13 +73,15 @@ cron.schedule('0 */12 * * *', async () => {
   }
 });
 
-app.listen(PORT, () => {
-  logger.info(`HostReminder démarré sur le port ${PORT} (${process.env.NODE_ENV || 'development'})`);
-  console.log(`✓ HostReminder — http://localhost:${PORT}`);
-}).on('error', (err) => {
-  logger.error(`Échec démarrage port ${PORT}: ${err.message}`);
-  console.error(`✗ Erreur: ${err.message}`);
-  process.exit(1);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    logger.info(`HostReminder démarré sur le port ${PORT} (${process.env.NODE_ENV || 'development'})`);
+    console.log(`✓ HostReminder — http://localhost:${PORT}`);
+  }).on('error', (err) => {
+    logger.error(`Échec démarrage port ${PORT}: ${err.message}`);
+    console.error(`✗ Erreur: ${err.message}`);
+    process.exit(1);
+  });
+}
 
 module.exports = app;

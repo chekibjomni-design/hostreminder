@@ -12,6 +12,8 @@
     a {color:#0066cc; text-decoration:none;}
     a:hover {text-decoration:underline;}
     .danger {color:#c00;}
+    .pagination {margin-top:10px;}
+    .pagination a {margin:0 5px;}
   </style>
 </head>
 <body>
@@ -20,16 +22,48 @@
     <a href="/dashboard.html">↩ Retour au tableau de bord</a>
   </nav>
 
+  <!-- Recherche d'utilisateurs -->
+  <form method="GET" action="/admin" style="margin-bottom:20px;">
+    <input type="text" name="search" placeholder="Chercher email ou nom" value="<%= typeof search !== 'undefined' ? search : '' %>" />
+    <button type="submit">Rechercher</button>
+  </form>
+
   <section>
     <h2>Utilisateurs</h2>
     <table>
       <thead>
         <tr><th>ID</th><th>Email</th><th>Nom</th><th>Rôle</th><th>Actions</th></tr>
       </thead>
-      <tbody id="users-body">
-        <!-- Rows injected by server‑side rendering -->
+      <tbody>
+        <% users.forEach(function(user) { %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.email %></td>
+            <td><%= user.name %></td>
+            <td>
+              <form method="POST" action="/admin/users/<%= user.id %>/role" style="display:inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <select name="role" onchange="this.form.submit()">
+                  <option value="ADMIN" <%= user.role === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
+                  <option value="HOST" <%= user.role === 'HOST' ? 'selected' : '' %>>HOST</option>
+                </select>
+              </form>
+            </td>
+            <td>
+              <form method="POST" action="/admin/users/<%= user.id %>/delete" style="display:inline;" onsubmit="return confirm('Supprimer cet utilisateur ?');">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button type="submit" class="danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
       </tbody>
     </table>
+    <div class="pagination">
+      Page <%= page %> sur <%= totalPagesUsers %>
+      <% if (page > 1) { %> <a href="/admin?page=<%= page - 1 %>&search=<%= encodeURIComponent(search) %>">Précédent</a> <% } %>
+      <% if (page < totalPagesUsers) { %> <a href="/admin?page=<%= page + 1 %>&search=<%= encodeURIComponent(search) %>">Suivant</a> <% } %>
+    </div>
   </section>
 
   <section>
@@ -38,10 +72,23 @@
       <thead>
         <tr><th>ID</th><th>Propriété</th><th>Invité</th><th>Check‑in</th><th>Status</th></tr>
       </thead>
-      <tbody id="reservations-body">
-        <!-- Rows injected by server‑side rendering -->
+      <tbody>
+        <% reservations.forEach(function(r) { %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.property ? r.property.name : '' %></td>
+            <td><%= r.guestName %></td>
+            <td><%= new Date(r.checkIn).toLocaleString() %></td>
+            <td><%= r.status %></td>
+          </tr>
+        <% }) %>
       </tbody>
     </table>
+    <div class="pagination">
+      Page <%= page %> sur <%= totalPagesReservations %>
+      <% if (page > 1) { %> <a href="/admin?page=<%= page - 1 %>">Précédent</a> <% } %>
+      <% if (page < totalPagesReservations) { %> <a href="/admin?page=<%= page + 1 %>">Suivant</a> <% } %>
+    </div>
   </section>
 </body>
 </html>
