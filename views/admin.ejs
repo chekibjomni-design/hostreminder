@@ -32,7 +32,7 @@
     <h2>Utilisateurs</h2>
     <table>
       <thead>
-        <tr><th>ID</th><th>Email</th><th>Nom</th><th>Rôle</th><th>Actions</th></tr>
+        <tr><th>ID</th><th>Email</th><th>Nom</th><th>Rôle</th><th>Créé le</th><th>Mis à jour le</th><th>ResetExpires</th><th>ResetToken</th><th>Actions</th></tr>
       </thead>
       <tbody>
         <% users.forEach(function(user) { %>
@@ -49,6 +49,10 @@
                 </select>
               </form>
             </td>
+            <td><%= new Date(user.createdAt).toLocaleString() %></td>
+            <td><%= new Date(user.updatedAt).toLocaleString() %></td>
+            <td><%= user.resetExpires ? new Date(user.resetExpires).toLocaleString() : '' %></td>
+            <td><%= user.resetToken || '' %></td>
             <td>
               <form method="POST" action="/admin/users/<%= user.id %>/delete" style="display:inline;" onsubmit="return confirm('Supprimer cet utilisateur ?');">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />

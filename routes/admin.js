@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         where: userWhere,
         skip,
         take,
-        select: { id: true, email: true, name: true, role: true }
+        select: { id: true, email: true, name: true, role: true, createdAt: true, updatedAt: true, resetExpires: true, resetToken: true }
       }),
       req.prisma.user.count({ where: userWhere })
     ]);
