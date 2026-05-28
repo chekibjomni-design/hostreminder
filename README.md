@@ -46,3 +46,8 @@ The application expects the following variables to be defined (either in a `.env
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` – SMTP credentials for Brevo email sending
 
 Make sure these are present before starting the server.
+- `ADMIN_EMAIL` – e‑mail du compte admin
+- `ADMIN_PASSWORD` – mot de passe du compte admin
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` – credentials Google OAuth
+- `FACEBOOK_APP_ID` / `FACEBOOK_APP_SECRET` – credentials Facebook OAuth
+- `AIRBNB_CLIENT_ID` / `AIRBNB_CLIENT_SECRET` – credentials Airbnb OAuth
