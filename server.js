@@ -8,6 +8,8 @@ const path = require('path');
 const cron = require('node-cron');
 const { PrismaClient } = require('@prisma/client');
 const logger = require('./lib/logger');
+const passport = require('passport');
+require('./lib/passport-config')(passport);
 const icalParser = require('./lib/ical');
 
 const prisma = new PrismaClient();
@@ -40,6 +42,10 @@ app.use((req, res, next) => {
   req.logger = logger;
   next();
 });
+
+// Initialise Passport (OAuth) – utilise la même session Express
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/properties', require('./routes/properties'));
