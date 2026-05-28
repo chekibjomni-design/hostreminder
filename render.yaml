@@ -18,8 +18,7 @@ services:
       - key: PORT
         value: "3000"
       - key: DATABASE_URL
-        fromDatabase:
-          - hostreminder-db
+        value: file:./database.db
       - key: SESSION_SECRET
         generateValue: true
       - key: GROQ_API_KEY
