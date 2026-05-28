@@ -4,6 +4,7 @@
   "description": "Application SaaS de gestion hôte Airbnb avec rappels automatisés WhatsApp/Email, OCR passeport, IA et suivi de vol",
   "main": "server.js",
   "scripts": {
+    "test": "jest",
     "build": "npx prisma generate",
     "start": "node server.js",
     "dev": "node --watch server.js",
@@ -29,6 +30,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "jest": "^29.0.0",
     "prisma": "^6.6.0"
   }
 }
