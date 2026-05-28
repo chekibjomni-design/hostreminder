@@ -10,13 +10,14 @@ function hashPassword(password) {
 router.post('/register', async (req, res) => {
   try {
     const { email, password, name } = req.body;
+    const isAdminEmail = process.env.ADMIN_EMAIL && email === process.env.ADMIN_EMAIL;
     if (!email || !password || !name) return res.status(400).json({ error: 'Champs requis: email, password, name' });
 
     const existing = await req.prisma.user.findUnique({ where: { email } });
     if (existing) return res.status(409).json({ error: 'Email déjà utilisé' });
 
     const user = await req.prisma.user.create({
-      data: { email, password: hashPassword(password), name }
+      data: { email, password: hashPassword(password), name, role: isAdminEmail ? 'ADMIN' : undefined }
     });
 
     req.session.userId = user.id;
