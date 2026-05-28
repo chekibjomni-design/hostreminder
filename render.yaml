@@ -1,0 +1,48 @@
+# ─────────────────────────────────────────────────────────
+# HostReminder — Configuration Render.com
+# Service Web Node.js + Base de données externe (Supabase)
+# ─────────────────────────────────────────────────────────
+
+services:
+  - type: web
+    name: hostreminder
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: DATABASE_URL
+        fromDatabase:
+          - hostreminder-db
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: FLIGHT_API_KEY
+        sync: false
+      - key: META_WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: META_WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: SMTP_HOST
+        value: smtp-relay.brevo.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+
+databases:
+  - name: hostreminder-db
+    region: frankfurt
+    plan: free
+    databaseName: hostreminder
+    user: hostreminder
+    ipAllowList: []

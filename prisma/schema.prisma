@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("HOST")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  properties Property[]
+  sessions   Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Property {
+  id               String   @id @default(cuid())
+  userId           String
+  name             String
+  airbnbIcalUrl    String?
+  propertyMapsLink String?
+  timezone         String   @default("Europe/Paris")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  owner       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+}
+
+model Reservation {
+  id             String   @id @default(cuid())
+  propertyId     String
+  guestName      String
+  guestEmail     String?
+  guestPhone     String?
+  passportName   String?
+  passportNumber String?
+  checkIn        DateTime
+  checkOut       DateTime
+  flightNumber   String?
+  flightStatus   String?
+  status         String   @default("CONFIRMED")
+  icalUid        String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  messages  Message[]
+}
+
+model Message {
+  id            String   @id @default(cuid())
+  reservationId String
+  content       String
+  direction     String   @default("outbound")
+  channel       String   @default("email")
+  sentAt        DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  level     String
+  message   String
+  meta      String?
+  createdAt DateTime @default(now())
+}

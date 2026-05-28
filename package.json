@@ -1,0 +1,33 @@
+{
+  "name": "hostreminder",
+  "version": "1.0.0",
+  "description": "Application SaaS de gestion hôte Airbnb avec rappels automatisés WhatsApp/Email, OCR passeport, IA et suivi de vol",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "axios": "^1.7.9",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "helmet": "^8.0.0",
+    "multer": "^1.4.5-lts.2",
+    "node-cron": "^3.0.3",
+    "node-ical": "^0.21.0",
+    "nodemailer": "^6.9.16",
+    "tesseract.js": "^5.1.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.6.0"
+  }
+}
