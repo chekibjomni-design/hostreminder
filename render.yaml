@@ -38,6 +38,22 @@ services:
         sync: false
       - key: SMTP_PASS
         sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FACEBOOK_APP_ID
+        sync: false
+      - key: FACEBOOK_APP_SECRET
+        sync: false
+      - key: AIRBNB_CLIENT_ID
+        sync: false
+      - key: AIRBNB_CLIENT_SECRET
+        sync: false
 
 databases:
   - name: hostreminder-db
