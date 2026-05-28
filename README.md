@@ -30,6 +30,9 @@ Run `npm test` to execute the Jest test that mocks tesseract.js.
 ## License
 MIT
 
+## CI trigger
+CI trigger: 2026-05-28T23:15:00Z
+
 ## Required Environment Variables
 The application expects the following variables to be defined (either in a `.env` file for local development or as Render environment variables):
 - `PORT` – HTTP port (default 3000)
