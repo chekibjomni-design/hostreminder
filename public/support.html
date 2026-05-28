@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Support AI Chatbot</title>
+<style>
+  body {font-family:Arial,Helvetica,sans-serif;margin:20px;background:#f9f9f9;}
+  #chat {border:1px solid #ccc;padding:10px;height:400px;overflow-y:auto;margin-bottom:10px;background:#fff;}
+  .msg {margin:5px 0;}
+  .user {color:#0066cc; font-weight:bold;}
+  .bot {color:#333;}
+</style>
+</head>
+<body>
+<h1>Support AI Chatbot</h1>
+<div id="chat"></div>
+<input id="msg" type="text" placeholder="Votre message..." style="width:80%" />
+<button id="send">Envoyer</button>
+<script>
+const chatDiv=document.getElementById('chat');
+const input=document.getElementById('msg');
+const sendBtn=document.getElementById('send');
+let conversation=[];
+function addMessage(text, authorClass, label){
+  const p=document.createElement('div');
+  p.className='msg '+authorClass;
+  p.textContent=label+': '+text;
+  chatDiv.appendChild(p);
+  chatDiv.scrollTop=chatDiv.scrollHeight;
+}
+sendBtn.onclick=async()=>{
+  const userMsg=input.value.trim();
+  if(!userMsg) return;
+  addMessage(userMsg,'user','Vous');
+  conversation.push({role:'user',content:userMsg});
+  input.value='';
+  try{
+    const resp=await fetch('/api/ai/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:conversation})});
+    const data=await resp.json();
+    const reply=data.reply||'(no response)';
+    addMessage(reply,'bot','Bot');
+    conversation.push({role:'assistant',content:reply});
+  }catch(e){
+    addMessage('Erreur du serveur','bot','Bot');
+  }
+};
+</script>
+</body>
+</html>
