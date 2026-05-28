@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Super‑User – Administration HostReminder</title>
+  <style>
+    body {font-family:Arial,Helvetica,sans-serif; margin:20px; background:#f9f9f9;}
+    h1 {color:#333;}
+    table {border-collapse:collapse; width:100%; margin-top:20px;}
+    th, td {border:1px solid #ccc; padding:8px; text-align:left;}
+    th {background:#eee;}
+    a {color:#0066cc; text-decoration:none;}
+    a:hover {text-decoration:underline;}
+    .danger {color:#c00;}
+  </style>
+</head>
+<body>
+  <h1>Administration – HostReminder</h1>
+  <nav>
+    <a href="/dashboard.html">↩ Retour au tableau de bord</a>
+  </nav>
+
+  <section>
+    <h2>Utilisateurs</h2>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Email</th><th>Nom</th><th>Rôle</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="users-body">
+        <!-- Rows injected by server‑side rendering -->
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Réservations récentes (10 dernières)</h2>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Propriété</th><th>Invité</th><th>Check‑in</th><th>Status</th></tr>
+      </thead>
+      <tbody id="reservations-body">
+        <!-- Rows injected by server‑side rendering -->
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>
